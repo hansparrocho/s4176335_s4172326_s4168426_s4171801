@@ -1,0 +1,25 @@
+# Maven build output
+target/
+
+# Temporary test JSON files
+test-drivers*.json
+test-buses*.json
+
+# VS Code settings
+.vscode/
+
+# IntelliJ IDEA files
+.idea/
+*.iml
+
+# Eclipse files
+.project
+.classpath
+.settings/
+
+# Compiled Java files
+*.class
+
+# OS files
+.DS_Store
+Thumbs.db
