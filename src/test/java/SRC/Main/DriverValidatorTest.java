@@ -2,6 +2,9 @@ package SRC.Main;
 
 import org.junit.jupiter.api.Test;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class DriverValidatorTest {
@@ -78,9 +81,9 @@ public class DriverValidatorTest {
     // D4 - License Update Restriction
 
     @Test
-    void driverWithFiveYearsCanChangeLicence() {
-        DriverRepository repo =
-                new DriverRepository(java.nio.file.Path.of("test-drivers.json"));
+    void driverWithFiveYearsCanChangeLicence() throws Exception {
+        Path tempFile = Files.createTempFile("drivers", ".json");
+        DriverRepository repo = new DriverRepository(tempFile);
 
         Driver original = new Driver(
                 "23@CD#EFAB",
@@ -107,9 +110,9 @@ public class DriverValidatorTest {
     }
 
     @Test
-    void driverWithMoreThan10YearsCannotChangeLicence() {
-        DriverRepository repo =
-                new DriverRepository(java.nio.file.Path.of("test-drivers2.json"));
+    void driverWithMoreThan10YearsCannotChangeLicence() throws Exception {
+        Path tempFile = Files.createTempFile("drivers", ".json");
+        DriverRepository repo = new DriverRepository(tempFile);
 
         Driver original = new Driver(
                 "45@CD#EFAB",
@@ -136,9 +139,9 @@ public class DriverValidatorTest {
     }
 
     @Test
-    void driverWithExactly10YearsCanChangeLicence() {
-        DriverRepository repo =
-                new DriverRepository(java.nio.file.Path.of("test-drivers3.json"));
+    void driverWithExactly10YearsCanChangeLicence() throws Exception {
+        Path tempFile = Files.createTempFile("drivers", ".json");
+        DriverRepository repo = new DriverRepository(tempFile);
 
         Driver original = new Driver(
                 "67@CD#EFAB",
@@ -167,9 +170,9 @@ public class DriverValidatorTest {
     // D5 - Immutable Fields
 
     @Test
-    void driverIDCannotBeChangedDuringUpdate() {
-        DriverRepository repo =
-                new DriverRepository(java.nio.file.Path.of("test-drivers4.json"));
+    void driverIDCannotBeChangedDuringUpdate() throws Exception {
+        Path tempFile = Files.createTempFile("drivers", ".json");
+        DriverRepository repo = new DriverRepository(tempFile);
 
         Driver original = new Driver(
                 "78@CD#EFAB",
@@ -196,9 +199,9 @@ public class DriverValidatorTest {
     }
 
     @Test
-    void driverNameCannotBeChangedDuringUpdate() {
-        DriverRepository repo =
-                new DriverRepository(java.nio.file.Path.of("test-drivers5.json"));
+    void driverNameCannotBeChangedDuringUpdate() throws Exception {
+        Path tempFile = Files.createTempFile("drivers", ".json");
+        DriverRepository repo = new DriverRepository(tempFile);
 
         Driver original = new Driver(
                 "79@CD#EFAB",
@@ -225,9 +228,9 @@ public class DriverValidatorTest {
     }
 
     @Test
-    void mutableDriverFieldsCanBeUpdated() {
-        DriverRepository repo =
-                new DriverRepository(java.nio.file.Path.of("test-drivers6.json"));
+    void mutableDriverFieldsCanBeUpdated() throws Exception {
+        Path tempFile = Files.createTempFile("drivers", ".json");
+        DriverRepository repo = new DriverRepository(tempFile);
 
         Driver original = new Driver(
                 "89@CD#EFAB",
@@ -253,7 +256,8 @@ public class DriverValidatorTest {
         Driver retrieved = repo.retrieve("89@CD#EFAB").orElse(null);
 
         assertNotNull(retrieved);
-        assertEquals("69|Bourke Street|Melbourne|VIC|Australia",
+        assertEquals(
+                "69|Bourke Street|Melbourne|VIC|Australia",
                 retrieved.getAddress());
     }
 }
